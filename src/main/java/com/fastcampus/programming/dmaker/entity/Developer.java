@@ -27,7 +27,7 @@ public class Developer {
     private DeveloperLevel developerLevel;
 
     @Enumerated(EnumType.STRING)
-    private DeveloperSkillType developerSkillLevel;
+    private DeveloperSkillType developerSkillType;
 
     private Integer experienceYears; // 경력
     private String memberId; // 회사 고유의 멤버 id

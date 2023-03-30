@@ -28,14 +28,12 @@ public class DMakerController {
     }
 
     @PostMapping("/create-developer")
-    public List<String> createDeveloper(
+    public CreateDeveloper.Response createDeveloper(
            @Valid @RequestBody CreateDeveloper.Request request
             ) {
         log.info("POST /create-developer HTTP/1.1");
         log.info("[create-developer] REQUEST {} ", request);
 
-        dMakerService.createDeveloper(request);
-
-        return Collections.singletonList("Nasus");
+        return dMakerService.createDeveloper(request);
     }
 }

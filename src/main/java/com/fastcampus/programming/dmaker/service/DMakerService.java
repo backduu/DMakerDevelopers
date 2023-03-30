@@ -26,18 +26,21 @@ public class DMakerService {
     private final DeveloperRepository developerRepository;
 
     @Transactional
-    public void createDeveloper(CreateDeveloper.Request request) {
+    public CreateDeveloper.Response createDeveloper(CreateDeveloper.Request request) {
         validateCreateDeveloperRequest(request);
 
         Developer developer = Developer.builder()
-                .developerLevel(DeveloperLevel.NEW)
-                .developerSkillLevel(DeveloperSkillType.FRONT_END)
-                .experienceYears(1)
-                .age(26)
-                .name("Nasus")
+                .developerLevel(request.getDeveloperLevel())
+                .developerSkillType(request.getDeveloperSkillType())
+                .experienceYears(request.getExperienceYears())
+                .age(request.getAge())
+                .name(request.getName())
+                .memberId(request.getMemberId())
                 .build();
 
         developerRepository.save(developer);
+
+        return CreateDeveloper.Response.fromEntity(developer);
     }
 
     private void validateCreateDeveloperRequest(CreateDeveloper.Request request) {
