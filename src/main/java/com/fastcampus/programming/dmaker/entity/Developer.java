@@ -34,6 +34,8 @@ public class Developer {
     private String name;
     private Integer age;
 
+    private String sex;
+    private String spec;
 
     // ====> 생성 시점과 수정 시점을 적용시키게 하려면 @EnableJpaAuditing
     //       를 main에 추가한다.

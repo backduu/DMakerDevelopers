@@ -3,10 +3,7 @@ package com.fastcampus.programming.dmaker.dto;
 import com.fastcampus.programming.dmaker.entity.Developer;
 import com.fastcampus.programming.dmaker.type.DeveloperLevel;
 import com.fastcampus.programming.dmaker.type.DeveloperSkillType;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
 public class CreateDeveloper {
@@ -35,6 +32,14 @@ public class CreateDeveloper {
         @Min(20)
         @Max(90)
         private Integer age;
+
+        @NotNull
+        @Pattern(regexp="female|male",
+                message = "[SYSTEM] sex will be input as \"male\" or \"female\"")
+        private String sex;
+
+        @Size(min = 0, max = 150, message = "[SYSTEM] spec size is 0 ~ 150")
+        private String spec;
     }
 
     @Getter

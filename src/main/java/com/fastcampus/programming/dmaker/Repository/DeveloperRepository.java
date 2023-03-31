@@ -11,7 +11,6 @@ public interface DeveloperRepository
  extends JpaRepository<Developer, Long> {
     // Optional<T> : T가 있을 수도 있고 없을 수도 있다.
     Optional<Developer> findByMemberId(String memberId);  // 메소드 명만 가지고도 특정 컬럼명으로 검색을 할 수 있다. "Spring data JPA"
+    // Optional은 map 메소드와 호환이 되므로 fromEntity를 들고와서 이를 get해준다. (get보단 orElseThrow가 좋음)
     //void findByMemberId(String memberId);
-
-
 }

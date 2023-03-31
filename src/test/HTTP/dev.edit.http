@@ -1,0 +1,3 @@
+### PUT request with a header
+PUT http://localhost:8080/developer/seung11
+Accept: application/json

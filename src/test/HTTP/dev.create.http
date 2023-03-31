@@ -3,10 +3,12 @@ POST http://localhost:8080/create-developer
 Content-Type: application/json
 
 {
-  "developerLevel": "SENIOR"
+  "developerLevel": "NEW"
   , "developerSkillType": "FRONT_END"
   , "experienceYears": "1"
-  , "memberId": "ven25"
-  , "name": "ven"
-  , "age" : 25
+  , "memberId": "seung11"
+  , "name": "seunghye"
+  , "age" : 27
+  , "sex" : "female"
+  , "spec" : "10 projects of Vision"
 }
