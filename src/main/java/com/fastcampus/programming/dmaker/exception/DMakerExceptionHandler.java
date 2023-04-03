@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import static com.fastcampus.programming.dmaker.exception.DMakerErrorCode.INTERNAL_SERVER_ERROR;
 import static com.fastcampus.programming.dmaker.exception.DMakerErrorCode.INVALID_REQUEST;
-import static org.springframework.data.jpa.repository.support.JpaRepositoryFactory.EclipseLinkProjectionQueryCreationListener.log;
 
 @RestControllerAdvice
 @Slf4j
