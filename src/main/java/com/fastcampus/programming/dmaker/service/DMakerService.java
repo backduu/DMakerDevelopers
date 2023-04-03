@@ -1,21 +1,21 @@
 package com.fastcampus.programming.dmaker.service;
 
 import com.fastcampus.programming.dmaker.Repository.DeveloperRepository;
+import com.fastcampus.programming.dmaker.Repository.RetiredDeveloperRepository;
+import com.fastcampus.programming.dmaker.code.StatusCode;
 import com.fastcampus.programming.dmaker.dto.CreateDeveloper;
 import com.fastcampus.programming.dmaker.dto.DeveloperDetailDto;
 import com.fastcampus.programming.dmaker.dto.DeveloperDto;
 import com.fastcampus.programming.dmaker.dto.EditDeveloper;
 import com.fastcampus.programming.dmaker.entity.Developer;
-import com.fastcampus.programming.dmaker.exception.DMakerErrorCode;
+import com.fastcampus.programming.dmaker.entity.RetiredDeveloper;
 import com.fastcampus.programming.dmaker.exception.DMakerException;
 import com.fastcampus.programming.dmaker.type.DeveloperLevel;
-import com.fastcampus.programming.dmaker.type.DeveloperSkillType;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.fastcampus.programming.dmaker.exception.DMakerErrorCode.*;
@@ -29,6 +29,7 @@ import static com.fastcampus.programming.dmaker.exception.DMakerErrorCode.*;
 // RequiredArgsConstructor를 사용하였다.
 public class DMakerService {
     private final DeveloperRepository developerRepository;
+    private final RetiredDeveloperRepository retiredDeveloperRepository;
 
     @Transactional
     public CreateDeveloper.Response createDeveloper(CreateDeveloper.Request request) {
@@ -43,6 +44,7 @@ public class DMakerService {
                 .memberId(request.getMemberId())
                 .sex(request.getSex())
                 .spec(request.getSpec())
+                .statusCode(StatusCode.EMPLOYED)
                 .build();
 
         developerRepository.save(developer);
@@ -50,8 +52,8 @@ public class DMakerService {
         return CreateDeveloper.Response.fromEntity(developer);
     }
 
-    public List<DeveloperDto> getAllDevelopers() {
-        return developerRepository.findAll()
+    public List<DeveloperDto> getAllEmployedDevelopers() {
+        return developerRepository.findDevelopersByStatusCodeEquals(StatusCode.EMPLOYED)
                 .stream().map(DeveloperDto::fromEntity)
                 .collect(Collectors.toList());
     }
@@ -114,5 +116,20 @@ public class DMakerService {
         else if (developerLevel == DeveloperLevel.EXPERT &&
                 experienceYears < 12)
             throw new DMakerException(LEVEL_EXPERIENCE_YEARS_NOT_MATCHED);
+    }
+
+    @Transactional
+    public DeveloperDetailDto deleteDeveloper(String memberId) {
+        Developer developer = developerRepository.findByMemberId(memberId)
+                .orElseThrow(() -> new DMakerException(NO_DEVELOPER));
+        developer.setStatusCode(StatusCode.RETIRED);
+
+        RetiredDeveloper retiredDeveloper = RetiredDeveloper.builder()
+                                                            .memberId(memberId)
+                                                            .name(developer.getName())
+                                                            .build();
+
+        retiredDeveloperRepository.save(retiredDeveloper);
+        return DeveloperDetailDto.fromEntity(developer);
     }
 }

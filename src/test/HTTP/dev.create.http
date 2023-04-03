@@ -4,11 +4,11 @@ Content-Type: application/json
 
 {
   "developerLevel": "NEW"
-  , "developerSkillType": "FRONT_END"
+  , "developerSkillType": "FULL_STACK"
   , "experienceYears": "1"
-  , "memberId": "seung11"
-  , "name": "seunghye"
-  , "age" : 27
-  , "sex" : "female"
-  , "spec" : "10 projects of Vision"
+  , "memberId": "Park11"
+  , "name": "ParkJiHun"
+  , "age" : 28
+  , "sex" : "male"
+  , "spec" : "8 projects of AI"
 }

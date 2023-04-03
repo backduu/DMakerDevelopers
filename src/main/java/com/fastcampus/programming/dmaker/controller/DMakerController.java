@@ -1,17 +1,15 @@
 package com.fastcampus.programming.dmaker.controller;
 
-import com.fastcampus.programming.dmaker.dto.CreateDeveloper;
-import com.fastcampus.programming.dmaker.dto.DeveloperDetailDto;
-import com.fastcampus.programming.dmaker.dto.DeveloperDto;
-import com.fastcampus.programming.dmaker.dto.EditDeveloper;
+import com.fastcampus.programming.dmaker.dto.*;
+import com.fastcampus.programming.dmaker.exception.DMakerException;
 import com.fastcampus.programming.dmaker.service.DMakerService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -21,10 +19,10 @@ public class DMakerController {
     private final DMakerService dMakerService;
 
     @GetMapping("/developers")
-    public List<DeveloperDto> getAllDevelopers() {
+    public List<DeveloperDto> getAllEmployedDevelopers() {
         log.info("GET /developers HTTP/1.1");
 
-        return dMakerService.getAllDevelopers();
+        return dMakerService.getAllEmployedDevelopers();
     }
 
     @GetMapping("/developer/{memberId}")
@@ -54,5 +52,28 @@ public class DMakerController {
         log.info("PUT /developer/{} HTTP/1.1", memberId);
 
         return dMakerService.editDeveloper(memberId, request);
+    }
+
+    @DeleteMapping("/developer/{memberId}")
+    public DeveloperDetailDto deleteDeveloper(
+            @PathVariable String memberId
+    ) {
+        return dMakerService.deleteDeveloper(memberId);
+    }
+
+    @ResponseStatus(value= HttpStatus.CONFLICT)
+    @ExceptionHandler(DMakerException.class)
+    public DMakerErrorResponse handleException(
+            DMakerException exception
+            , HttpServletRequest request
+    ) {
+        log.error("[DMakerResponse] error: {}, url: {}, message: {}"
+            , exception.getDMakerErrorCode(), request.getRequestURI(), exception.getDetailMessage()
+        );
+
+        return DMakerErrorResponse.builder()
+                .errorCode(exception.getDMakerErrorCode())
+                .errorMessage(exception.getDetailMessage())
+                .build();
     }
 }

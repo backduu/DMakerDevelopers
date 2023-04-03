@@ -1,3 +1,11 @@
 ### PUT request with a header
-PUT http://localhost:8080/developer/seung11
-Accept: application/json
+PUT http://localhost:8080/developer/kang22
+Content-Type: application/json
+
+{
+"developerLevel" : "JUNIOR" ,
+"developerSkillType" : "FRONT_END",
+"experienceYears" : 3,
+"age" : 26,
+"spec" : "5 projects of Web"
+}

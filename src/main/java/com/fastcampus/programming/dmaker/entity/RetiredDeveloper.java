@@ -1,6 +1,5 @@
 package com.fastcampus.programming.dmaker.entity;
 
-import com.fastcampus.programming.dmaker.code.StatusCode;
 import com.fastcampus.programming.dmaker.type.DeveloperLevel;
 import com.fastcampus.programming.dmaker.type.DeveloperSkillType;
 import jakarta.persistence.*;
@@ -18,32 +17,13 @@ import java.time.LocalDateTime;
 @Builder
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class Developer {
-
+public class RetiredDeveloper {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
-
-    @Enumerated(EnumType.STRING)
-    private DeveloperLevel developerLevel;
-
-    @Enumerated(EnumType.STRING)
-    private DeveloperSkillType developerSkillType;
-
-    @Enumerated(EnumType.STRING)
-    private StatusCode statusCode;
-
-    private Integer experienceYears; // 경력
     private String memberId; // 회사 고유의 멤버 id
     private String name;
-    private Integer age;
 
-    private String sex;
-    private String spec;
-
-    // ====> 생성 시점과 수정 시점을 적용시키게 하려면 @EnableJpaAuditing
-    //       를 main에 추가한다.
-    @CreatedDate
     private LocalDateTime createdAt;
     @LastModifiedDate
     private LocalDateTime updatedAt;

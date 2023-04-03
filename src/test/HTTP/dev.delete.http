@@ -1,0 +1,3 @@
+### DELETE request with a header
+DELETE http://localhost:8080/developer/Park11
+Content-Type: application/json
